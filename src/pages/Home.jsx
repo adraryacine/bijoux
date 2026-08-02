@@ -5,6 +5,7 @@ import { ArrowRight, ShieldCheck, Truck, Tag } from 'lucide-react'
 import { useLang } from '../lib/i18n.jsx'
 import { fetchFeatured, fetchCategories } from '../lib/db.js'
 import ProductCard from '../components/ProductCard.jsx'
+import TiltCard from '../components/TiltCard.jsx'
 
 export default function Home() {
   const { t, lang, dir } = useLang()
@@ -53,19 +54,25 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="relative"
           >
-            <div className="aspect-[4/5] overflow-hidden rounded-3xl shadow-soft">
-              <img
-                src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=900&q=80"
-                alt="Bijoux Éclat"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-5 start-6 rounded-2xl bg-white/90 px-5 py-3 shadow-soft backdrop-blur">
-              <p className="font-display text-2xl font-semibold text-gold-dark">100%</p>
-              <p className="text-xs text-muted">
-                {lang === 'ar' ? 'جودة مضمونة' : 'Qualité garantie'}
-              </p>
-            </div>
+            <TiltCard className="aspect-[4/5]">
+              <div className="h-full w-full overflow-hidden rounded-3xl shadow-soft">
+                <img
+                  src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=900&q=80"
+                  alt="Bijoux Éclat"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              {/* Badge en léger relief 3D */}
+              <div
+                style={{ transform: 'translateZ(45px)' }}
+                className="absolute -bottom-5 start-6 rounded-2xl bg-white/90 px-5 py-3 shadow-soft backdrop-blur"
+              >
+                <p className="font-display text-2xl font-semibold text-gold-dark">100%</p>
+                <p className="text-xs text-muted">
+                  {lang === 'ar' ? 'جودة مضمونة' : 'Qualité garantie'}
+                </p>
+              </div>
+            </TiltCard>
           </motion.div>
         </div>
       </section>

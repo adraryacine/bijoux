@@ -3,6 +3,7 @@ import { ShoppingBag } from 'lucide-react'
 import { useLang } from '../lib/i18n.jsx'
 import { useCart } from '../lib/cart.jsx'
 import { formatPrice, materialLabel } from '../lib/format.js'
+import TiltCard from './TiltCard.jsx'
 
 export default function ProductCard({ product }) {
   const { lang, t } = useLang()
@@ -15,7 +16,8 @@ export default function ProductCard({ product }) {
       : 0
 
   return (
-    <div className="group card overflow-hidden transition duration-300 hover:shadow-soft">
+    <TiltCard className="h-full" max={6} float={false}>
+    <div className="group card h-full overflow-hidden transition duration-300 hover:shadow-soft">
       <Link to={`/produit/${product.id}`} className="relative block aspect-square overflow-hidden bg-sand">
         {product.images?.[0] ? (
           <img
@@ -64,5 +66,6 @@ export default function ProductCard({ product }) {
         </div>
       </div>
     </div>
+    </TiltCard>
   )
 }
