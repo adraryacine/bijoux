@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream text-ink font-sans antialiased;
+}
+
+/* Arabe / RTL */
+[dir='rtl'] body,
+[dir='rtl'] {
+  @apply font-arabic;
+}
+
+/* Titres décoratifs */
+.font-display {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+[dir='rtl'] .font-display {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+}
+
+/* Scrollbar discrète */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { @apply bg-sand rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-gold-light; }
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-gold {
+    @apply btn bg-gold text-white hover:bg-gold-dark shadow-soft;
+  }
+  .btn-outline {
+    @apply btn border border-gold/40 text-ink hover:border-gold hover:bg-sand;
+  }
+  .btn-ghost {
+    @apply btn text-ink hover:bg-sand;
+  }
+  .input {
+    @apply w-full rounded-xl border border-sand bg-white px-4 py-3 text-sm outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/20;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink/80;
+  }
+  .card {
+    @apply rounded-2xl bg-white shadow-card;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium;
+  }
+}
