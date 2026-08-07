@@ -5,7 +5,10 @@ const CartContext = createContext(null)
 export function CartProvider({ children }) {
   const [items, setItems] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem('cart') || '[]')
+      const stored = JSON.parse(localStorage.getItem('cart') || '[]')
+      // On s'assure que c'est bien un tableau : un JSON valide mais non-tableau
+      // (ex. {} enregistré par erreur) ferait planter items.reduce plus bas.
+      return Array.isArray(stored) ? stored : []
     } catch {
       return []
     }
