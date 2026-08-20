@@ -5,11 +5,11 @@ export default function Logo({ className = '' }) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <img
-        src="/logo.jpg"
+        src="/logo.png"
         alt="Bijoux Joëlle"
-        width="40"
-        height="40"
-        className="h-10 w-10 shrink-0 rounded-full object-cover"
+        width="44"
+        height="44"
+        className="h-11 w-11 shrink-0 object-contain"
       />
       <div className="leading-none">
         <span className="font-display text-2xl font-semibold tracking-wide text-ink">Bijoux Joëlle</span>
