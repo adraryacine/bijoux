@@ -132,7 +132,8 @@ export default function ProductDetail() {
                 <span className="w-10 text-center font-medium">{qty}</span>
                 <button
                   onClick={() => setQty((q) => Math.min(product.stock, q + 1))}
-                  className="p-3 text-ink hover:text-gold"
+                  disabled={qty >= product.stock}
+                  className="p-3 text-ink hover:text-gold disabled:cursor-not-allowed disabled:opacity-30"
                 >
                   <Plus className="h-4 w-4" />
                 </button>

@@ -57,37 +57,44 @@ export async function fetchProduct(id) {
 
 // ---- Commandes ----
 export async function createOrder({ customer, cart, subtotal, shipping }) {
-  const total = subtotal + shipping
   if (!isSupabaseReady) {
     // Mode démo : on simule une référence sans persister.
     return { ref: 'DEMO-' + Math.random().toString(36).slice(2, 7).toUpperCase(), demo: true }
   }
 
-  const { data: order, error } = await supabase
-    .from('orders')
-    .insert({
-      customer_name: customer.name,
-      phone: customer.phone,
-      wilaya: customer.wilaya,
-      address: customer.address,
-      note: customer.note,
-      subtotal,
-      shipping,
-      total,
-    })
-    .select()
-    .single()
-  if (error) throw error
-
   const items = cart.map((i) => ({
-    order_id: order.id,
     product_id: i.id,
     product_name: i.name_fr,
     unit_price: i.price,
     quantity: i.qty,
   }))
-  const { error: itemsError } = await supabase.from('order_items').insert(items)
-  if (itemsError) throw itemsError
+
+  // On passe par la fonction Postgres `create_order` (atomique + security
+  // definer) : elle vérifie le stock, crée la commande ET décrémente le stock.
+  // Impossible de le faire côté client car le RLS interdit à l'anon d'écrire
+  // dans `products`, et une décrémentation client serait sujette aux courses.
+  const { data: order, error } = await supabase.rpc('create_order', {
+    p_customer_name: customer.name,
+    p_phone: customer.phone,
+    p_wilaya: customer.wilaya,
+    p_address: customer.address,
+    p_note: customer.note,
+    p_subtotal: subtotal,
+    p_shipping: shipping,
+    p_items: items,
+  })
+
+  if (error) {
+    // Stock insuffisant : on remonte une erreur typée pour un message propre.
+    const match = /STOCK_INSUFFISANT:(.*)$/.exec(error.message || '')
+    if (match) {
+      const e = new Error('OUT_OF_STOCK')
+      e.code = 'OUT_OF_STOCK'
+      e.product = match[1].trim()
+      throw e
+    }
+    throw error
+  }
 
   return order
 }

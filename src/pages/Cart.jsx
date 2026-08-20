@@ -46,14 +46,23 @@ export default function Cart() {
                     </button>
                   </div>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center rounded-full border border-sand">
-                      <button onClick={() => setQty(i.id, i.qty - 1)} className="p-2 hover:text-gold">
-                        <Minus className="h-3.5 w-3.5" />
-                      </button>
-                      <span className="w-8 text-center text-sm font-medium">{i.qty}</span>
-                      <button onClick={() => setQty(i.id, i.qty + 1)} className="p-2 hover:text-gold">
-                        <Plus className="h-3.5 w-3.5" />
-                      </button>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center rounded-full border border-sand">
+                        <button onClick={() => setQty(i.id, i.qty - 1)} className="p-2 hover:text-gold">
+                          <Minus className="h-3.5 w-3.5" />
+                        </button>
+                        <span className="w-8 text-center text-sm font-medium">{i.qty}</span>
+                        <button
+                          onClick={() => setQty(i.id, i.qty + 1)}
+                          disabled={i.qty >= i.stock}
+                          className="p-2 hover:text-gold disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <Plus className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                      {i.qty >= i.stock && (
+                        <span className="text-xs text-muted">{t('only_left', { n: i.stock })}</span>
+                      )}
                     </div>
                     <span className="font-semibold text-gold-dark">
                       {formatPrice(i.price * i.qty, lang)}

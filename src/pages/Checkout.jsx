@@ -55,7 +55,11 @@ export default function Checkout() {
       clear()
       navigate('/merci', { state: { ref: order.ref, demo: order.demo } })
     } catch (err) {
-      setServerError(err.message || 'Erreur')
+      if (err.code === 'OUT_OF_STOCK') {
+        setServerError(t('stock_insufficient', { name: err.product }))
+      } else {
+        setServerError(err.message || 'Erreur')
+      }
     } finally {
       setSubmitting(false)
     }
