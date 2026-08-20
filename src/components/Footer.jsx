@@ -14,7 +14,7 @@ export default function Footer() {
           <Logo />
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">{t('footer_about')}</p>
           <div className="mt-4 flex gap-3">
-            <a href="https://instagram.com" target="_blank" rel="noreferrer"
+            <a href="https://www.instagram.com/bijouxjoelleaokas/" target="_blank" rel="noreferrer"
               className="rounded-full border border-sand p-2 text-ink transition hover:border-gold hover:text-gold">
               <Instagram className="h-5 w-5" />
             </a>
@@ -53,7 +53,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-sand py-5 text-center text-xs text-muted">
-        © {new Date().getFullYear()} Éclat. {t('rights')}
+        © {new Date().getFullYear()} Bijoux Joëlle. {t('rights')}
       </div>
     </footer>
   )

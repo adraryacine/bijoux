@@ -58,7 +58,7 @@ export default function Home() {
               <div className="h-full w-full overflow-hidden rounded-3xl shadow-soft">
                 <img
                   src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=900&q=80"
-                  alt="Bijoux Éclat"
+                  alt="Bijoux Joëlle"
                   className="h-full w-full object-cover"
                 />
               </div>

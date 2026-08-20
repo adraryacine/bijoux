@@ -30,7 +30,7 @@ export default function AdminLayout() {
       {/* Sidebar */}
       <aside className="hidden w-64 shrink-0 flex-col border-r border-sand bg-white p-5 md:flex">
         <div className="mb-8 flex items-center gap-2">
-          <span className="font-display text-2xl font-semibold text-gold-dark">Éclat</span>
+          <span className="font-display text-2xl font-semibold text-gold-dark">Bijoux Joëlle</span>
           <span className="chip bg-sand text-[10px]">Admin</span>
         </div>
         <nav className="flex-1 space-y-1">
@@ -66,7 +66,7 @@ export default function AdminLayout() {
       {/* Mobile top bar */}
       <div className="flex flex-1 flex-col">
         <header className="flex items-center justify-between border-b border-sand bg-white px-4 py-3 md:hidden">
-          <span className="font-display text-xl font-semibold text-gold-dark">Éclat Admin</span>
+          <span className="font-display text-xl font-semibold text-gold-dark">Bijoux Joëlle Admin</span>
           <button onClick={handleLogout} className="text-red-500"><LogOut className="h-5 w-5" /></button>
         </header>
         <nav className="flex gap-1 overflow-auto border-b border-sand bg-white px-2 py-2 md:hidden">

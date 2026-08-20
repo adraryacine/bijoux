@@ -29,7 +29,7 @@ export default function Login() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-sand/60 to-cream px-4" dir="ltr">
       <div className="card w-full max-w-sm p-8">
         <div className="mb-6 text-center">
-          <span className="font-display text-3xl font-semibold text-gold-dark">Éclat</span>
+          <span className="font-display text-3xl font-semibold text-gold-dark">Bijoux Joëlle</span>
           <p className="mt-1 text-sm text-muted">Espace administrateur</p>
         </div>
 
