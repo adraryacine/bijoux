@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ShoppingBag, Minus, Plus, ShieldCheck, Truck } from 'lucide-react'
 import { useLang } from '../lib/i18n.jsx'
+import { useTitle } from '../lib/useTitle.js'
 import { useCart } from '../lib/cart.jsx'
 import { fetchProduct, fetchProducts } from '../lib/db.js'
 import { formatPrice, materialLabel } from '../lib/format.js'
@@ -31,6 +32,8 @@ export default function ProductDetail() {
       })
       .finally(() => setLoading(false))
   }, [id])
+
+  useTitle(product ? (lang === 'ar' && product.name_ar) || product.name_fr : undefined)
 
   if (loading) return <div className="mx-auto max-w-7xl px-4 py-20 text-center text-muted">…</div>
   if (!product)

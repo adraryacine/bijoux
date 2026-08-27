@@ -1,10 +1,12 @@
 import { Link, useLocation, Navigate } from 'react-router-dom'
 import { CheckCircle2 } from 'lucide-react'
 import { useLang } from '../lib/i18n.jsx'
+import { useTitle } from '../lib/useTitle.js'
 
 export default function OrderSuccess() {
   const { t } = useLang()
   const { state } = useLocation()
+  useTitle(t('order_success'))
 
   if (!state?.ref) return <Navigate to="/" replace />
 

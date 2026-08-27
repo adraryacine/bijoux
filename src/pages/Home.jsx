@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, ShieldCheck, Truck, Tag } from 'lucide-react'
 import { useLang } from '../lib/i18n.jsx'
+import { useTitle } from '../lib/useTitle.js'
 import { fetchFeatured, fetchCategories } from '../lib/db.js'
 import ProductCard from '../components/ProductCard.jsx'
 import TiltCard from '../components/TiltCard.jsx'
 
 export default function Home() {
   const { t, lang, dir } = useLang()
+  useTitle()
   const [featured, setFeatured] = useState([])
   const [cats, setCats] = useState([])
 

@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react'
 import { useLang } from '../lib/i18n.jsx'
+import { useTitle } from '../lib/useTitle.js'
 import { useCart } from '../lib/cart.jsx'
 import { formatPrice } from '../lib/format.js'
 
 export default function Cart() {
   const { t, lang, dir } = useLang()
   const { items, setQty, remove, subtotal } = useCart()
+  useTitle(t('your_cart'))
 
   if (items.length === 0) {
     return (

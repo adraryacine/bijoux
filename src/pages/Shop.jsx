@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLang } from '../lib/i18n.jsx'
+import { useTitle } from '../lib/useTitle.js'
 import { fetchProducts, fetchCategories } from '../lib/db.js'
 import { MATERIALS } from '../lib/format.js'
 import ProductCard from '../components/ProductCard.jsx'
@@ -10,6 +11,7 @@ const PER_PAGE = 12
 
 export default function Shop() {
   const { t, lang } = useLang()
+  useTitle(t('shop'))
   const [params, setParams] = useSearchParams()
   const [products, setProducts] = useState([])
   const [cats, setCats] = useState([])

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ShieldCheck, AlertCircle } from 'lucide-react'
 import { useLang } from '../lib/i18n.jsx'
+import { useTitle } from '../lib/useTitle.js'
 import { useCart } from '../lib/cart.jsx'
 import { formatPrice } from '../lib/format.js'
 import { WILAYAS } from '../data/wilayas.js'
@@ -9,6 +10,7 @@ import { createOrder } from '../lib/db.js'
 
 export default function Checkout() {
   const { t, lang } = useLang()
+  useTitle(t('checkout_title'))
   const { items, subtotal, clear } = useCart()
   const navigate = useNavigate()
 
