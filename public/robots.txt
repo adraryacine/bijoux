@@ -1,0 +1,12 @@
+# Bijoux Joëlle — règles pour les robots d'indexation
+
+User-agent: *
+Allow: /
+
+# Zones privées / sans intérêt SEO : on demande aux robots de ne pas les indexer.
+Disallow: /admin
+Disallow: /panier
+Disallow: /commande
+Disallow: /merci
+
+Sitemap: https://bijouxjoelle.com/sitemap.xml
