@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { SlidersHorizontal } from 'lucide-react'
+import { SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLang } from '../lib/i18n.jsx'
 import { fetchProducts, fetchCategories } from '../lib/db.js'
 import { MATERIALS } from '../lib/format.js'
 import ProductCard from '../components/ProductCard.jsx'
+
+const PER_PAGE = 12
 
 export default function Shop() {
   const { t, lang } = useLang()
@@ -12,6 +14,7 @@ export default function Shop() {
   const [products, setProducts] = useState([])
   const [cats, setCats] = useState([])
   const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(1)
 
   const cat = params.get('cat') || ''
   const material = params.get('material') || ''
@@ -36,6 +39,30 @@ export default function Shop() {
       `${p.name_fr} ${p.name_ar || ''}`.toLowerCase().includes(q),
     )
   }, [products, q])
+
+  // Pagination : on n'affiche que PER_PAGE produits à la fois pour garder la
+  // page fluide même avec un grand catalogue.
+  const pageCount = Math.max(1, Math.ceil(visible.length / PER_PAGE))
+
+  // Revenir à la page 1 dès qu'un filtre / la recherche change.
+  useEffect(() => {
+    setPage(1)
+  }, [cat, material, sort, q])
+
+  // Garder la page dans les bornes si la liste rétrécit.
+  useEffect(() => {
+    if (page > pageCount) setPage(pageCount)
+  }, [page, pageCount])
+
+  const paged = useMemo(
+    () => visible.slice((page - 1) * PER_PAGE, page * PER_PAGE),
+    [visible, page],
+  )
+
+  const goToPage = (n) => {
+    setPage(n)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   const update = (key, value) => {
     const next = new URLSearchParams(params)
@@ -122,11 +149,55 @@ export default function Shop() {
           ) : visible.length === 0 ? (
             <p className="py-20 text-center text-muted">{t('no_products')}</p>
           ) : (
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
-              {visible.map((p) => (
-                <ProductCard key={p.id} product={p} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
+                {paged.map((p) => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+
+              {pageCount > 1 && (
+                <div className="mt-10 flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => goToPage(page - 1)}
+                    disabled={page === 1}
+                    className="flex items-center gap-1 rounded-full border border-sand bg-white px-4 py-2 text-sm text-ink transition hover:border-gold disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
+                    {t('prev')}
+                  </button>
+
+                  <div className="flex flex-wrap justify-center gap-1">
+                    {Array.from({ length: pageCount }).map((_, i) => {
+                      const n = i + 1
+                      return (
+                        <button
+                          key={n}
+                          onClick={() => goToPage(n)}
+                          className={`h-9 w-9 rounded-full text-sm transition ${
+                            n === page
+                              ? 'bg-gold text-white'
+                              : 'bg-sand text-ink hover:bg-gold/20'
+                          }`}
+                          aria-current={n === page ? 'page' : undefined}
+                        >
+                          {n}
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  <button
+                    onClick={() => goToPage(page + 1)}
+                    disabled={page === pageCount}
+                    className="flex items-center gap-1 rounded-full border border-sand bg-white px-4 py-2 text-sm text-ink transition hover:border-gold disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    {t('next')}
+                    <ChevronRight className="h-4 w-4 rtl:rotate-180" />
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

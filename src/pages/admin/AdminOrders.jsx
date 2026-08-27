@@ -89,12 +89,22 @@ export default function AdminOrders() {
                       <div>
                         <h4 className="mb-3 text-sm font-semibold text-muted">Articles</h4>
                         <ul className="space-y-2">
-                          {o.order_items?.map((it) => (
-                            <li key={it.id} className="flex justify-between text-sm">
-                              <span>{it.product_name} <span className="text-muted">×{it.quantity}</span></span>
-                              <span>{formatPrice(it.unit_price * it.quantity)}</span>
-                            </li>
-                          ))}
+                          {o.order_items?.map((it) => {
+                            const img = it.products?.images?.[0]
+                            return (
+                              <li key={it.id} className="flex items-center gap-3 text-sm">
+                                <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-sand">
+                                  {img ? (
+                                    <img src={img} alt={it.product_name} className="h-full w-full object-cover" />
+                                  ) : (
+                                    <div className="flex h-full items-center justify-center text-muted">✦</div>
+                                  )}
+                                </div>
+                                <span className="flex-1">{it.product_name} <span className="text-muted">×{it.quantity}</span></span>
+                                <span>{formatPrice(it.unit_price * it.quantity)}</span>
+                              </li>
+                            )
+                          })}
                         </ul>
                         <div className="mt-3 space-y-1 border-t border-sand pt-3 text-sm">
                           <div className="flex justify-between text-muted"><span>Sous-total</span><span>{formatPrice(o.subtotal)}</span></div>

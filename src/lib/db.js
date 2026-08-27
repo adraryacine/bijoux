@@ -138,7 +138,7 @@ export async function uploadProductImage(file) {
 export async function adminListOrders() {
   const { data, error } = await supabase
     .from('orders')
-    .select('*, order_items(*)')
+    .select('*, order_items(*, products(images))')
     .order('created_at', { ascending: false })
   if (error) throw error
   return data
