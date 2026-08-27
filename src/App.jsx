@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import { AuthProvider } from './lib/auth.jsx'
 import StoreLayout from './components/StoreLayout.jsx'
 import Home from './pages/Home.jsx'
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="categories" element={<AdminCategories />} />
         </Route>
       </Routes>
+      <Analytics />
     </AuthProvider>
   )
 }
